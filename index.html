@@ -1,0 +1,2548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compliance Assistant – Tikler</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Roboto+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       1. TIKLER DESIGN SYSTEM TOKENS & NEW-GLOBAL-V2 INTEGRATION
+       ========================================================================== */
+    :root {
+      --primary: #2f4bff;
+      --primary-hover: #1d4ed8;
+      --primary-active: #001bcc;
+      --primary-focus: #0022ff;
+      --primary-light: #eff6ff;
+      --primary-subtle: #f5f6ff;
+      --primary-border: #dbeafe;
+      --Main: #2f4bff;
+      --blue-700: #1d4ed8;
+      --blue-500: #3b82f6;
+
+      --white: #ffffff;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #90a1b9;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+      --slate-950: #020618;
+
+      /* Status Tokens */
+      --ok-bg: #ecfdf5;
+      --ok-text: #059669;
+      --ok-border: #a7f3d0;
+      --warn-bg: #fffbeb;
+      --warn-text: #d97706;
+      --warn-border: #fde68a;
+      --bad-bg: #fef2f2;
+      --bad-text: #ef4444;
+      --bad-border: #fecaca;
+      --info-bg: #eff6ff;
+      --info-text: #2f4bff;
+      --info-border: #dbeafe;
+      --pur-bg: #f5f3ff;
+      --pur-text: #7c3aed;
+      --pur-border: #ede9fe;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    body {
+      font-family: "Roboto", "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: var(--slate-50);
+      color: var(--slate-700);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    button, input, textarea {
+      font: inherit;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    :focus-visible {
+      outline: 0;
+      box-shadow: 0 0 0 3px rgba(47, 75, 255, 0.2);
+    }
+
+    /* ==========================================================================
+       2. EXACT RULES FROM src/styles/global/new-global-v2.scss
+       ========================================================================== */
+    .new-design-v2 {
+      font-family: "Roboto", "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif !important;
+    }
+
+    .new-design-v2 .primary-heading,
+    .primary-heading {
+      color: var(--slate-950, #020618);
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 510;
+      line-height: normal;
+    }
+
+    .new-design-v2 .primary-input-label,
+    .primary-input-label {
+      color: var(--slate-400, #90a1b9);
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 510;
+      line-height: normal;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .new-design-v2 .primary-textbox,
+    .primary-textbox {
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      min-height: 49px !important;
+      border-radius: 8px !important;
+      border: 1px solid #e2e8f0 !important;
+      background: #f8fafc !important;
+      padding: 0.375rem 0.75rem !important;
+      font-size: 1rem !important;
+      color: #1f2937 !important;
+      outline: none !important;
+      transition:
+        border-color 0.2s ease-in-out,
+        box-shadow 0.2s ease-in-out,
+        background-color 0.2s ease-in-out !important;
+    }
+
+    .new-design-v2 .primary-textbox::placeholder,
+    .primary-textbox::placeholder {
+      color: #94a3b8 !important;
+      opacity: 1 !important;
+    }
+
+    .new-design-v2 .primary-textbox:hover:not(:disabled),
+    .primary-textbox:hover:not(:disabled) {
+      border-color: #80bdff !important;
+    }
+
+    .new-design-v2 .primary-textbox:focus,
+    .primary-textbox:focus {
+      box-shadow: rgb(38, 132, 255) 0px 0px 0px 1px !important;
+      border-color: #80bdff !important;
+      background: #ffffff !important;
+    }
+
+    .new-design-v2 .primary-textbox:disabled,
+    .primary-textbox:disabled {
+      background-color: #e2e8f0 !important;
+      cursor: not-allowed !important;
+      opacity: 0.6 !important;
+    }
+
+    .new-design-v2 .primary-textbox--error,
+    .primary-textbox--error {
+      border-color: #ef4444 !important;
+    }
+
+    .new-design-v2 .primary-textbox--error:focus,
+    .primary-textbox--error:focus {
+      box-shadow: rgb(239, 68, 68) 0px 0px 0px 1px !important;
+      border-color: #ef4444 !important;
+    }
+
+    .input-error {
+      margin-top: 0.25rem !important;
+      font-size: 0.75rem !important;
+      color: #ef4444 !important;
+    }
+
+    /* Textarea with same look & feel as primary-textbox */
+    .new-design-v2 .primary-textarea,
+    .primary-textarea {
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      min-height: 120px !important;
+      border-radius: 8px !important;
+      border: 1px solid #e2e8f0 !important;
+      background: #f8fafc !important;
+      padding: 0.5rem 0.75rem !important;
+      font-size: 1rem !important;
+      color: #1f2937 !important;
+      outline: none !important;
+      transition:
+        border-color 0.2s ease-in-out,
+        box-shadow 0.2s ease-in-out,
+        background-color 0.2s ease-in-out !important;
+      resize: vertical !important;
+      line-height: 1.5 !important;
+    }
+
+    .new-design-v2 .primary-textarea::placeholder,
+    .primary-textarea::placeholder {
+      color: #94a3b8 !important;
+      opacity: 1 !important;
+    }
+
+    .new-design-v2 .primary-textarea:hover:not(:disabled),
+    .primary-textarea:hover:not(:disabled) {
+      border-color: #80bdff !important;
+    }
+
+    .new-design-v2 .primary-textarea:focus,
+    .primary-textarea:focus {
+      box-shadow: rgb(38, 132, 255) 0px 0px 0px 1px !important;
+      border-color: #80bdff !important;
+      background: #ffffff !important;
+    }
+
+    .new-design-v2 .primary-textarea:disabled,
+    .primary-textarea:disabled {
+      background-color: #e2e8f0 !important;
+      cursor: not-allowed !important;
+      opacity: 0.6 !important;
+    }
+
+    .new-design-v2 .primary-textarea--error,
+    .primary-textarea--error {
+      border-color: #ef4444 !important;
+    }
+
+    .new-design-v2 .primary-textarea--error:focus,
+    .primary-textarea--error:focus {
+      box-shadow: rgb(239, 68, 68) 0px 0px 0px 1px !important;
+      border-color: #ef4444 !important;
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+      .new-design-v2 .primary-textbox,
+      .new-design-v2 .primary-textarea,
+      .primary-textbox,
+      .primary-textarea {
+        transition: none !important;
+      }
+    }
+
+    .new-design-v2 .secondary-button,
+    .secondary-button,
+    .sb {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 12px 28px !important;
+      border-radius: 32px !important;
+      border: 1px solid var(--slate-200, #e2e8f0) !important;
+      background-color: var(--white, #ffffff) !important;
+      color: var(--slate-700, #334155) !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      font-family: "Roboto", "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif !important;
+      text-decoration: none !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+      min-height: 41px !important;
+      outline: none !important;
+    }
+
+    .new-design-v2 .secondary-button:hover:not(:disabled),
+    .secondary-button:hover:not(:disabled),
+    .sb:hover:not(:disabled) {
+      background-color: var(--slate-50, #f8fafc) !important;
+      border-color: var(--slate-300, #cad5e2) !important;
+      color: var(--slate-800, #1e293b) !important;
+    }
+
+    .new-design-v2 .secondary-button:focus,
+    .secondary-button:focus,
+    .sb:focus {
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+      border-color: var(--blue-500, #3b82f6) !important;
+    }
+
+    .new-design-v2 .secondary-button:active,
+    .secondary-button:active,
+    .sb:active {
+      transform: translateY(1px) !important;
+    }
+
+    .new-design-v2 .secondary-button:disabled,
+    .secondary-button:disabled,
+    .sb:disabled {
+      cursor: not-allowed !important;
+      opacity: 0.5 !important;
+      background-color: var(--slate-100, #f1f5f9) !important;
+      color: var(--slate-400, #94a3b8) !important;
+      border-color: var(--slate-200, #e2e8f0) !important;
+    }
+
+    .secondary-button--small, .sb--small {
+      padding: 8px 20px !important;
+      font-size: 13px !important;
+      min-width: 100px !important;
+    }
+
+    .secondary-button--large {
+      padding: 16px 32px !important;
+      font-size: 16px !important;
+      min-width: 140px !important;
+    }
+
+    .new-design-v2 .primary-button,
+    .primary-button,
+    .pb {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 12px 20px !important;
+      border-radius: 32px !important;
+      border: none !important;
+      background: var(--Main, #2f4bff) !important;
+      color: white !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      font-family: "Roboto", "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif !important;
+      text-decoration: none !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+      min-height: 41px !important;
+      outline: none !important;
+      gap: 10px !important;
+    }
+
+    .new-design-v2 .primary-button:hover:not(:disabled),
+    .primary-button:hover:not(:disabled),
+    .pb:hover:not(:disabled) {
+      background: var(--blue-700, #1d4ed8) !important;
+      box-shadow: 0 4px 12px rgba(47, 75, 255, 0.3) !important;
+    }
+
+    .new-design-v2 .primary-button:focus,
+    .primary-button:focus,
+    .pb:focus {
+      box-shadow: 0 0 0 3px rgba(47, 75, 255, 0.2) !important;
+      outline: none !important;
+    }
+
+    .new-design-v2 .primary-button:active,
+    .primary-button:active,
+    .pb:active {
+      transform: translateY(0px) !important;
+      box-shadow: 0 2px 8px rgba(47, 75, 255, 0.4) !important;
+    }
+
+    .new-design-v2 .primary-button:disabled,
+    .primary-button:disabled,
+    .pb:disabled {
+      cursor: not-allowed !important;
+      opacity: 0.32 !important;
+      color: var(--white, #fff) !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .primary-button--small, .pb--small {
+      padding: 8px 20px !important;
+      font-size: 13px !important;
+      min-width: 100px !important;
+      min-height: 37px !important;
+    }
+
+    .primary-button--large {
+      padding: 16px 32px !important;
+      font-size: 16px !important;
+      min-width: 140px !important;
+      min-height: 49px !important;
+    }
+
+    /* ==========================================================================
+       3. TIKLER AUTHENTIC GLOBAL NAVIGATION BAR
+       ========================================================================== */
+    .tikler-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      height: 60px;
+      background-color: var(--white);
+      box-shadow: 0 4px 8px 0 rgba(60, 64, 73, 0.08), 0 0 1px 0 rgba(60, 64, 73, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .tikler-header__left {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      height: 100%;
+    }
+
+    .tikler-logo-link {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .tikler-logo-svg {
+      width: 96px;
+      height: 34px;
+      display: block;
+    }
+
+    .tikler-nav {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      overflow-x: auto;
+    }
+
+    .tikler-nav-link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      height: 60px;
+      padding: 0 16px;
+      margin: 0 2px;
+      text-decoration: none;
+      color: #727178;
+      font-size: 14px;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: color 0.15s ease, background-color 0.15s ease;
+      border-bottom: 2px solid transparent;
+    }
+
+    .tikler-nav-link:hover {
+      color: var(--primary);
+      background-color: var(--primary-subtle);
+    }
+
+    .tikler-nav-link.selected {
+      color: var(--primary);
+      font-weight: 600;
+      border-bottom: 2px solid var(--primary);
+    }
+
+    .tikler-header__right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .tikler-icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 0;
+      background: none;
+      color: #727178;
+      display: grid;
+      place-items: center;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .tikler-icon-btn:hover {
+      background: var(--slate-100);
+      color: var(--slate-900);
+    }
+
+    .tikler-notif-dot {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 8px;
+      height: 8px;
+      background: var(--bad-text);
+      border-radius: 50%;
+      border: 1.5px solid var(--white);
+    }
+
+    .tikler-avatar-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 13px;
+      border: 1px solid var(--primary-border);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      margin-left: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .tikler-avatar-btn:hover {
+      box-shadow: 0 0 0 3px rgba(47, 75, 255, 0.15);
+    }
+
+    /* User Profile Dropdown Menu */
+    .user-profile-menu {
+      position: absolute;
+      top: calc(100% + 12px);
+      right: 0;
+      width: 240px;
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+      z-index: 1050;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      animation: fadeIn 0.15s ease-out;
+    }
+
+    .user-profile-menu.show {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .user-profile-menu__header {
+      padding: 14px 16px;
+      background: var(--slate-50);
+      border-bottom: 1px solid var(--slate-200);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .user-profile-menu__name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--slate-950);
+    }
+
+    .user-profile-menu__role {
+      font-size: 12px;
+      color: var(--slate-500);
+      font-weight: 500;
+    }
+
+    .user-profile-menu__email {
+      font-size: 12px;
+      color: var(--slate-400);
+    }
+
+    .user-profile-menu__item {
+      padding: 12px 16px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--slate-700);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.15s ease;
+    }
+
+    .user-profile-menu__item:hover {
+      background: var(--primary-subtle);
+      color: var(--primary);
+    }
+
+    .user-profile-menu__divider {
+      height: 1px;
+      background: var(--slate-200);
+      margin: 4px 0;
+    }
+
+    .user-profile-menu__item.logout {
+      color: var(--bad-text);
+    }
+
+    .user-profile-menu__item.logout:hover {
+      background: var(--bad-bg);
+      color: var(--bad-text);
+    }
+
+    /* ==========================================================================
+       4. PAGE SHELL & TYPOGRAPHY
+       ========================================================================== */
+    .page {
+      padding: 28px 32px 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 1520px;
+      margin: 0 auto;
+    }
+
+    .crumb {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--slate-700);
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .crumb a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .crumb a:hover {
+      color: var(--primary);
+    }
+
+    .crumb b {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .crumb-sep {
+      color: var(--slate-400);
+      font-size: 15px;
+    }
+
+    .back {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid var(--slate-200);
+      background: var(--white);
+      display: grid;
+      place-items: center;
+      transition: all 0.2s ease;
+      color: var(--slate-700);
+    }
+
+    .back:hover {
+      background: var(--slate-50);
+      border-color: var(--slate-300);
+      color: var(--slate-950);
+    }
+
+    .head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .head h1 {
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--slate-950);
+    }
+
+    .head p {
+      max-width: 680px;
+      font-size: 14px;
+      color: var(--slate-600);
+      line-height: 1.5;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 16px;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    }
+
+    .ch {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--slate-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--slate-950);
+    }
+
+    .sub {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--slate-500);
+      margin-top: 3px;
+    }
+
+    /* Tabs Contract */
+    .tabs {
+      display: inline-flex;
+      gap: 4px;
+      padding: 4px;
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 32px;
+    }
+
+    .tabs button {
+      border: 1px solid transparent;
+      background: none;
+      border-radius: 32px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--slate-500);
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .tabs button:hover {
+      color: var(--slate-950);
+    }
+
+    .tabs button.on,
+    .tabs button[aria-selected="true"] {
+      background: var(--white);
+      color: var(--slate-950);
+      border-color: var(--slate-300);
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.12);
+    }
+
+    /* ==========================================================================
+       5. 3-COLUMN CASCADING PICKER + RIGHT SETUP PANEL
+       ========================================================================== */
+    .grid, .rg {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 440px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      min-width: 0;
+    }
+
+    .cols {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .col {
+      border-right: 1px solid var(--slate-200);
+      display: flex;
+      flex-direction: column;
+      min-height: 520px;
+      min-width: 0;
+    }
+
+    .col:last-child {
+      border-right: 0;
+    }
+
+    .col-h {
+      padding: 16px 16px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .col-h-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--slate-600);
+    }
+
+    .step-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-family: "Roboto Mono", monospace;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-grid;
+      place-items: center;
+    }
+
+    /* Search Box built with primary-textbox design */
+    .srch-wrapper {
+      margin: 0 16px 12px;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .srch-icon {
+      position: absolute;
+      left: 14px;
+      color: var(--slate-400);
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+    }
+
+    .srch-input {
+      padding-left: 40px !important;
+      min-height: 44px !important;
+      font-size: 14px !important;
+    }
+
+    .list {
+      padding: 0 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      overflow-y: auto;
+      max-height: 450px;
+    }
+
+    .it {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      min-height: 64px;
+      padding: 12px 14px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background: none;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .it:hover {
+      background: var(--slate-50);
+      border-color: var(--slate-200);
+    }
+
+    .it[aria-pressed="true"] {
+      background: var(--primary-subtle);
+      border-color: var(--primary);
+      box-shadow: 0 1px 4px rgba(47, 75, 255, 0.08);
+    }
+
+    .ic {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--slate-100);
+      color: var(--slate-500);
+      display: grid;
+      place-items: center;
+      flex: none;
+    }
+
+    .it[aria-pressed="true"] .ic {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .tx {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .nm {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--slate-800);
+      line-height: 1.35;
+      word-break: break-word;
+    }
+
+    .mt {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--slate-500);
+    }
+
+    .it[aria-pressed="true"] .nm {
+      color: var(--primary);
+    }
+
+    .ck {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      flex: none;
+    }
+
+    .empty {
+      margin: auto;
+      text-align: center;
+      color: var(--slate-500);
+      padding: 44px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .empty-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--slate-700);
+    }
+
+    /* Badges */
+    .bd {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border-radius: 32px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 5px 10px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .ok { background: var(--ok-bg); color: var(--ok-text); }
+    .warn { background: var(--warn-bg); color: var(--warn-text); }
+    .bad { background: var(--bad-bg); color: var(--bad-text); }
+    .info { background: var(--info-bg); color: var(--info-text); }
+    .neu { background: var(--slate-100); color: var(--slate-600); }
+    .pur { background: var(--pur-bg); color: var(--pur-text); border: 1px solid var(--pur-border); }
+
+    .lk {
+      background: none;
+      border: 0;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .lk:hover {
+      background: var(--primary-subtle);
+    }
+
+    /* ==========================================================================
+       6. RIGHT-HAND REVIEW SETUP PANEL
+       ========================================================================== */
+    .setup {
+      position: sticky;
+      top: 80px;
+    }
+
+    .sp-b {
+      padding: 20px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .doc-summary {
+      background: var(--primary-subtle);
+      border: 1px solid var(--primary-border);
+      border-left: 4px solid var(--primary);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .doc-summary .nm {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--slate-950);
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .field-block {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+
+    .field-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .dropdown-trigger {
+      width: 100%;
+      min-height: 49px;
+      padding: 8px 16px;
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      text-align: left;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .dropdown-trigger:hover {
+      border-color: #80bdff;
+      background: var(--white);
+    }
+
+    .dropdown-trigger[aria-expanded="true"] {
+      background: var(--white);
+      border-color: #80bdff;
+      box-shadow: 0 0 0 2px rgba(38, 132, 255, 0.2);
+    }
+
+    .dropdown-trigger__text {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dropdown-trigger__main {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--slate-800);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .dropdown-trigger__count {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+      border-radius: 32px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .dropdown-trigger__count.is-zero {
+      background: var(--bad-bg);
+      color: var(--bad-text);
+      border-color: var(--bad-border);
+    }
+
+    .dropdown-chevron {
+      color: var(--slate-500);
+      display: grid;
+      place-items: center;
+      transition: transform 0.2s ease;
+    }
+
+    .dropdown-trigger[aria-expanded="true"] .dropdown-chevron {
+      transform: rotate(180deg);
+      color: var(--primary);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.14);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dropdown-menu__top {
+      padding: 10px 16px;
+      background: var(--slate-50);
+      border-bottom: 1px solid var(--slate-200);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--slate-600);
+    }
+
+    .dropdown-menu__list {
+      max-height: 240px;
+      overflow-y: auto;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .dropdown-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--slate-800);
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.15s ease;
+    }
+
+    .dropdown-option:hover {
+      background: var(--slate-50);
+    }
+
+    .dropdown-option input[type="checkbox"] {
+      accent-color: var(--primary);
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      flex: none;
+    }
+
+    .dropdown-menu__footer {
+      padding: 8px 16px;
+      border-top: 1px solid var(--slate-200);
+      background: var(--white);
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .checklist-card {
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      padding: 16px;
+      background: var(--slate-50);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .checklist-card.has-cl {
+      background: var(--pur-bg);
+      border-color: var(--pur-border);
+    }
+
+    .checklist-checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--slate-900);
+      padding-top: 4px;
+    }
+
+    .checklist-checkbox-row input[type="checkbox"] {
+      accent-color: var(--primary);
+      width: 20px;
+      height: 20px;
+      margin-top: 1px;
+      cursor: pointer;
+      flex: none;
+    }
+
+    .scope-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .scope-chip {
+      background: var(--primary-light);
+      border: 1px solid var(--primary-border);
+      color: var(--primary);
+      border-radius: 32px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ==========================================================================
+       7. STICKY BOTTOM ACTION BAR (WHITE CARD SURFACE + MONOSPACE COUNTERS)
+       ========================================================================== */
+    .bar {
+      position: sticky;
+      bottom: 16px;
+      z-index: 20;
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(47, 75, 255, 0.08);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .bar-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      min-width: 0;
+      flex-wrap: wrap;
+    }
+
+    .bar-counter {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .bar-counter strong {
+      font: 700 26px "Roboto Mono", monospace;
+      color: var(--primary);
+    }
+
+    .bar-counter span {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--slate-600);
+      text-transform: uppercase;
+    }
+
+    .bar .sm {
+      font-size: 13.5px;
+      color: var(--slate-600);
+      min-width: 0;
+    }
+
+    .bar .sm b {
+      color: var(--slate-950);
+      font-size: 14px;
+    }
+
+    .acts {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    /* ==========================================================================
+       8. REVIEWING, RESULTS & ERROR VIEWS
+       ========================================================================== */
+    .run {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 48px 32px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sp {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 3px solid rgba(47, 75, 255, 0.2);
+      border-top-color: var(--primary);
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .track {
+      width: 100%;
+      height: 8px;
+      background: var(--slate-100);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+
+    .track i {
+      display: block;
+      height: 100%;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+
+    .steps {
+      list-style: none;
+      padding: 0;
+      width: 100%;
+      max-width: 360px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      color: var(--slate-400);
+      font-size: 14px;
+    }
+
+    .steps li {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .steps .done {
+      color: var(--ok-text);
+      font-weight: 500;
+    }
+
+    .steps .act {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .stat {
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .stat strong {
+      font: 700 28px "Roboto Mono", ui-monospace, monospace;
+    }
+
+    .fr {
+      display: grid;
+      grid-template-columns: 160px minmax(0, 1fr) 150px;
+      gap: 16px;
+      align-items: center;
+      padding: 16px 24px;
+      min-height: 64px;
+      border-top: 1px solid var(--slate-200);
+    }
+
+    .fr.h {
+      min-height: 48px;
+      padding: 12px 24px;
+      border-top: 0;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--slate-400);
+    }
+
+    .ref {
+      justify-self: start;
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 32px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--slate-700);
+    }
+
+    .mi {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 24px;
+      border-top: 1px solid var(--slate-200);
+    }
+
+    .mi .tx {
+      flex: 1;
+    }
+
+    .wi {
+      color: var(--warn-text);
+      display: grid;
+    }
+
+    .srcs {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .srcs .ref {
+      background: var(--white);
+      border-color: var(--slate-200);
+      color: var(--slate-800);
+      padding: 8px 16px;
+    }
+
+    .chat {
+      position: sticky;
+      top: 80px;
+      display: flex;
+      flex-direction: column;
+      max-height: calc(100vh - 100px);
+    }
+
+    .msgs {
+      padding: 16px 24px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 180px;
+    }
+
+    .m {
+      max-width: 90%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      line-height: 1.5;
+    }
+
+    .m.u {
+      align-self: flex-end;
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--white);
+    }
+
+    .cmp {
+      border-top: 1px solid var(--slate-200);
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cmp-input-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .q-chip {
+      border: 1px solid var(--slate-200);
+      background: var(--slate-50);
+      color: var(--slate-800);
+      border-radius: 32px;
+      padding: 8px 12px;
+      font-size: 12.5px;
+      font-weight: 500;
+      text-align: left;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .q-chip:hover {
+      background: var(--primary-light);
+      border-color: var(--primary-border);
+      color: var(--primary);
+    }
+
+    .rb {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 0;
+      background: var(--primary);
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      flex: none;
+      transition: background 0.2s ease;
+    }
+
+    .rb:hover {
+      background: var(--primary-hover);
+    }
+
+    .rb.g {
+      background: none;
+      color: var(--slate-500);
+      border: 1px solid var(--slate-200);
+    }
+
+    .rb.g:hover {
+      background: var(--slate-100);
+      color: var(--slate-800);
+    }
+
+    .ctx {
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .ehd {
+      padding: 24px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .eic {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--bad-bg);
+      color: var(--bad-text);
+      display: grid;
+      place-items: center;
+      flex: none;
+    }
+
+    /* ==========================================================================
+       9. FLOATING VIEW SWITCHER (DISCREET BOTTOM-LEFT CONTROL FOR PROTOTYPE TESTING)
+       ========================================================================== */
+    .state-switcher {
+      position: fixed;
+      bottom: 20px;
+      left: 24px;
+      z-index: 1000;
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 32px;
+      padding: 4px 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.12);
+    }
+
+    .state-switcher__label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--slate-400);
+      padding: 0 8px 0 10px;
+      letter-spacing: 0.05em;
+    }
+
+    .state-switcher__btn {
+      border: 1px solid transparent;
+      background: none;
+      border-radius: 32px;
+      padding: 6px 14px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--slate-600);
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .state-switcher__btn:hover {
+      color: var(--slate-950);
+      background: var(--slate-100);
+    }
+
+    .state-switcher__btn.on {
+      background: var(--primary);
+      color: var(--white);
+      box-shadow: 0 2px 6px rgba(47, 75, 255, 0.25);
+    }
+
+    @media (max-width: 1180px) {
+      .grid, .rg { grid-template-columns: 1fr; }
+      .setup, .chat { position: static; max-height: none; }
+    }
+
+    @media (max-width: 960px) {
+      .cols { grid-template-columns: 1fr; }
+      .col { border-right: 0; border-bottom: 1px solid var(--slate-200); min-height: 0; }
+    }
+
+    @media (max-width: 768px) {
+      .page { padding: 16px 14px 48px; }
+      .tikler-header { padding-left: 16px; padding-right: 16px; }
+      .tikler-nav { display: none; }
+      .head { flex-direction: column; align-items: flex-start; }
+      .fr { grid-template-columns: 1fr; gap: 8px; }
+      .fr.h { display: none; }
+      .stats { grid-template-columns: 1fr; }
+      .bar { flex-direction: column; align-items: stretch; }
+      .acts .pb, .acts .sb { flex: 1; }
+      .state-switcher { bottom: 85px; left: 16px; flex-wrap: wrap; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body class="new-design-v2">
+
+  <!-- AUTHENTIC TIKLER GLOBAL NAVIGATION BAR -->
+  <header class="tikler-header" role="banner">
+    <div class="tikler-header__left">
+      <a href="#files" class="tikler-logo-link" aria-label="Tikler Home">
+        <!-- Official Tikler Vector Logo -->
+        <svg class="tikler-logo-svg" viewBox="0 0 1160 420" xmlns="http://www.w3.org/2000/svg">
+          <g>
+            <path fill="#CCCCCC" d="M343.48,38.18h-66.5c-0.63,0-1.22-0.29-1.6-0.79l-8-10.86c-9.42-12.8-24.37-20.35-40.26-20.35h-79.08 c-26.03,0-47.41,19.89-49.78,45.3c2.76-0.88,5.71-1.35,8.77-1.35c11.2,0,20.93,6.38,25.76,15.69h76.42 c4.83-9.31,14.56-15.69,25.76-15.69s20.93,6.38,25.76,15.69h24.81c38.66,0,70,31.34,70,70v200.36h1.38c27.61,0,50-22.38,50-50 V101.62C406.92,66.58,378.51,38.18,343.48,38.18z"/>
+            <path fill="#01252D" d="M285.54,103.82c17.65,0,32,14.36,32,32v228c0,17.64-14.35,32-32,32h-228c-17.65,0-32-14.36-32-32v-228 c0-17.64,14.35-32,32-32H285.54 M285.54,85.82h-228c-27.61,0-50,22.39-50,50v228c0,27.61,22.39,50,50,50h228 c27.61,0,50-22.39,50-50v-228C335.54,108.21,313.15,85.82,285.54,85.82L285.54,85.82z"/>
+            <path fill="#01252D" d="M107.03,127.84c-4.97,0-9-4.03-9-9V79.12c0-4.97,4.03-9,9-9s9,4.03,9,9v39.72 C116.02,123.81,112,127.84,107.03,127.84z"/>
+            <path fill="#01252D" d="M234.96,127.84c-4.97,0-9-4.03-9-9V79.12c0-4.97,4.03-9,9-9s9,4.03,9,9v39.72 C243.96,123.81,239.93,127.84,234.96,127.84z"/>
+            <rect x="78.63" y="171.18" fill="#FD0E2D" width="48.05" height="48.05"/>
+            <rect x="147.51" y="171.18" fill="#FF5800" width="48.05" height="48.05"/>
+            <rect x="216.68" y="171.18" fill="#FFA306" width="48.05" height="48.05"/>
+            <rect x="147.51" y="240.09" fill="#16B100" width="48.05" height="48.05"/>
+            <rect x="147.51" y="308.99" fill="#02AD95" width="48.05" height="48.05"/>
+            <!-- Wordmark: Tikler -->
+            <path fill="#01252D" d="M522.57,339.6c3.21,0,6.98-0.32,11.29-0.96c4.31-0.64,7.57-1.38,9.78-2.2v19c-2.3,1.01-5.85,2-10.67,2.96 c-4.82,0.96-9.71,1.45-14.67,1.45c-29.56,0-44.34-15.56-44.34-46.68v-88h-21.34v-11.84l21.62-9.92l9.92-32.22h14.74v34.7h43.65 v19.28h-43.65v87.31c0,8.72,2.09,15.42,6.27,20.11C509.33,337.26,515.14,339.6,522.57,339.6z"/>
+            <path fill="#01252D" d="M578.92,164.98c0-5.51,1.4-9.5,4.2-11.98c2.8-2.48,6.27-3.72,10.4-3.72c3.86,0,7.23,1.24,10.12,3.72 c2.89,2.48,4.34,6.47,4.34,11.98c0,5.42-1.45,9.41-4.34,11.98s-6.27,3.86-10.12,3.86c-4.13,0-7.6-1.29-10.4-3.86 C580.32,174.39,578.92,170.4,578.92,164.98z M605.64,357.09h-24.79V205.88h24.79V357.09z"/>
+            <path fill="#01252D" d="M685.13,279.28l8.4-10.74l9.64-11.57l48.34-51.09h28.92l-61.14,64.59l65.41,86.62h-29.88l-52.47-70.51 l-17.21,15.01v55.5h-24.51V142.81h24.51v111.96l-1.1,24.51H685.13z"/>
+            <path fill="#01252D" d="M843.11,357.09h-24.79V142.81h24.79V357.09z"/>
+            <path fill="#01252D" d="M962.39,359.84c-22.68,0-40.46-6.86-53.36-20.59c-12.9-13.72-19.35-32.61-19.35-56.67 c0-24.24,6.01-43.54,18.04-57.91c12.03-14.37,28.28-21.55,48.75-21.55c19,0,34.15,6.13,45.45,18.38 c11.29,12.26,16.94,28.85,16.94,49.78v15.01H915.3c0.46,17.17,4.82,30.21,13.08,39.11c8.26,8.91,19.97,13.36,35.12,13.36 c8.08,0,15.74-0.71,23-2.13c7.25-1.42,15.74-4.2,25.48-8.33v21.76c-8.36,3.58-16.21,6.11-23.55,7.57 C981.07,359.11,972.4,359.84,962.39,359.84z M956.2,223.37c-11.84,0-21.21,3.81-28.09,11.43c-6.89,7.62-10.97,18.23-12.26,31.81 h76.98c-0.19-14.14-3.44-24.88-9.78-32.22C976.71,227.04,967.76,223.37,956.2,223.37z"/>
+            <path fill="#01252D" d="M1134.7,203.13c6.7,0,12.62,0.55,17.76,1.65l-3.03,22.86c-5.6-1.28-11.06-1.93-16.39-1.93 c-7.99,0-15.4,2.2-22.24,6.61c-6.84,4.41-12.19,10.49-16.04,18.25c-3.86,7.76-5.78,16.37-5.78,25.82v80.7h-24.79V205.88h20.38 l2.75,27.68h1.1c5.78-10.01,12.62-17.58,20.52-22.72C1116.84,205.7,1125.42,203.13,1134.7,203.13z"/>
+          </g>
+        </svg>
+      </a>
+
+      <!-- Primary Tikler Navigation Items with Selected State -->
+      <nav class="tikler-nav" aria-label="Global Navigation">
+        <a href="#knowledge-hub" class="tikler-nav-link selected">Knowledge Hub</a>
+        <a href="#files" class="tikler-nav-link">Workspaces</a>
+        <a href="#calendar" class="tikler-nav-link">Calendar</a>
+        <a href="#tasks" class="tikler-nav-link">Task Manager</a>
+        <a href="#archives" class="tikler-nav-link">Archives</a>
+        <a href="#requests" class="tikler-nav-link">Requests</a>
+      </nav>
+    </div>
+
+    <!-- Right-Hand Header Utility Actions -->
+    <div class="tikler-header__right">
+      <!-- Global Search -->
+      <button type="button" class="tikler-icon-btn" aria-label="Global Search" title="Search Tikler">
+        <svg width="20" height="20" fill="none" viewBox="0 0 25 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 17c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zM21.5 21l-6-6"/>
+        </svg>
+      </button>
+
+      <!-- Feedback / Help -->
+      <button type="button" class="tikler-icon-btn" aria-label="Help &amp; Feedback" title="Help &amp; Feedback">
+        <svg width="20" height="20" fill="none" viewBox="0 0 25 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12.5 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9zM12.5 17v.01"/>
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12.5 13.5c-.018-.325.07-.646.25-.917.18-.27.443-.475.75-.583.376-.144.713-.373.986-.67.272-.295.472-.65.583-1.037.112-.387.132-.794.06-1.19-.073-.396-.236-.77-.478-1.092-.241-.321-.554-.583-.914-.763-.36-.18-.756-.275-1.159-.277-.402 0-.8.092-1.16.27-.36.179-.675.438-.918.759"/>
+        </svg>
+      </button>
+
+      <!-- Notifications -->
+      <button type="button" class="tikler-icon-btn" aria-label="Notifications" title="Notifications">
+        <svg width="20" height="20" fill="none" viewBox="0 0 25 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 5c0-.53.21-1.04.586-1.414C11.46 3.21 11.97 3 12.5 3c.53 0 1.04.21 1.414.586.375.375.586.884.586 1.414 1.148.543 2.127 1.388 2.832 2.445C18.037 8.502 18.44 9.731 18.5 11v3c.075.622.295 1.217.643 1.738.347.521.812.953 1.357 1.262h-16c.545-.309 1.01-.74 1.357-1.262.348-.52.568-1.116.643-1.738v-3c.06-1.269.463-2.498 1.168-3.555C8.373 6.388 9.352 5.543 10.5 5M9.5 17v1c0 .796.316 1.559.879 2.121.562.563 1.325.879 2.121.879s1.559-.316 2.121-.879c.563-.562.879-1.325.879-2.121v-1"/>
+        </svg>
+        <span class="tikler-notif-dot"></span>
+      </button>
+
+      <!-- User Avatar / Profile Option -->
+      <button type="button" class="tikler-avatar-btn" id="profileBtn" aria-label="User Account" title="Rahul Kumar (Manager)">
+        RK
+      </button>
+
+      <!-- Profile Dropdown Popup -->
+      <div class="user-profile-menu" id="profileMenu" role="menu">
+        <div class="user-profile-menu__header">
+          <span class="user-profile-menu__name">Rahul Kumar</span>
+          <span class="user-profile-menu__role">Manager · Housing Operations</span>
+          <span class="user-profile-menu__email">rahul@tikler.io</span>
+        </div>
+        <a href="#profile" class="user-profile-menu__item" role="menuitem">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          My Profile
+        </a>
+        <a href="#settings" class="user-profile-menu__item" role="menuitem">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Workspace Settings
+        </a>
+        <div class="user-profile-menu__divider"></div>
+        <a href="#logout" class="user-profile-menu__item logout" role="menuitem">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Sign Out
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN ADMIN V2 PAGE -->
+  <main class="page">
+    <div class="crumb">
+      <button type="button" class="back" aria-label="Back to Knowledge Hub" id="i3" data-v="setup" title="Back to Knowledge Hub"></button>
+      <a href="#knowledge-hub">Knowledge Hub</a>
+      <span class="crumb-sep">›</span>
+      <b>Compliance Assistant</b>
+    </div>
+
+    <div class="head">
+      <h1 id="t">Compliance Assistant</h1>
+      <p id="d">Select a Workspace, Subfolder, and Document on the left, then use the dropdowns on the right to review against Policies, SOPs, Forms, and the Document Checklist.</p>
+    </div>
+
+    <!-- ======================================================================
+         STATE 1: SETUP (3-Column Document Picker + Dropdown Criteria Panel)
+         ====================================================================== -->
+    <section id="setup-v" class="grid">
+      <!-- Left Card: 3-Column Cascading Browser -->
+      <div class="card">
+        <div class="ch">
+          <div>
+            <h2 class="primary-heading">Choose Target Document</h2>
+            <p class="sub">Follow steps 1 to 3 below: Select a Workspace, pick a Subfolder, and select the Document to evaluate.</p>
+          </div>
+          <button type="button" class="bd info" id="wsBadge" data-a="toggle-multi" style="border: 1px solid var(--primary-border); cursor: pointer;" title="Toggle Single / Multi-Workspace Mode">1 Workspace Mode</button>
+        </div>
+
+        <div class="cols">
+          <!-- Column 1: Workspace -->
+          <div class="col">
+            <div class="col-h">
+              <span class="col-h-title"><span class="step-num">1</span> <span class="primary-input-label">Workspace</span></span>
+              <span class="sub" id="wsCount"></span>
+            </div>
+            <div class="srch-wrapper">
+              <span class="srch-icon" id="s0"></span>
+              <input class="primary-textbox srch-input" placeholder="Filter workspaces..." oninput="S.q[0]=this.value;rCols()" aria-label="Filter workspaces" />
+            </div>
+            <div class="list" id="l0"></div>
+          </div>
+
+          <!-- Column 2: Subfolder -->
+          <div class="col">
+            <div class="col-h">
+              <span class="col-h-title"><span class="step-num">2</span> <span class="primary-input-label">Subfolder</span></span>
+              <span class="sub" id="sfCount"></span>
+            </div>
+            <div class="srch-wrapper">
+              <span class="srch-icon" id="s1"></span>
+              <input class="primary-textbox srch-input" placeholder="Filter subfolders..." oninput="S.q[1]=this.value;rCols()" aria-label="Filter subfolders" />
+            </div>
+            <div class="list" id="l1"></div>
+          </div>
+
+          <!-- Column 3: Document -->
+          <div class="col">
+            <div class="col-h">
+              <span class="col-h-title"><span class="step-num">3</span> <span class="primary-input-label">Document</span></span>
+              <span class="sub" id="docCount"></span>
+            </div>
+            <div class="srch-wrapper">
+              <span class="srch-icon" id="s2"></span>
+              <input class="primary-textbox srch-input" placeholder="Filter documents..." oninput="S.q[2]=this.value;rCols()" aria-label="Filter documents" />
+            </div>
+            <div class="list" id="l2"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Card: Review Setup (Dropdowns + Checkbox Checklist) -->
+      <aside class="card setup" id="panel" aria-live="polite"></aside>
+    </section>
+
+    <!-- ======================================================================
+         STATE 2: REVIEWING PROGRESS
+         ====================================================================== -->
+    <section id="run-v" hidden></section>
+
+    <!-- ======================================================================
+         STATE 3: REVIEW RESULTS
+         ====================================================================== -->
+    <section id="result-v" class="rg" hidden>
+      <div class="stack">
+        <div class="card ctx" id="ctx"></div>
+
+        <div class="stats">
+          <div class="card stat">
+            <div>
+              <span class="bd ok">Passed</span>
+              <div class="sub" style="margin-top:8px">Compliant items</div>
+            </div>
+            <strong style="color:var(--ok-text)">02</strong>
+          </div>
+          <div class="card stat">
+            <div>
+              <span class="bd warn">Needs Attention</span>
+              <div class="sub" style="margin-top:8px">Missing or incomplete</div>
+            </div>
+            <strong style="color:var(--warn-text)">02</strong>
+          </div>
+          <div class="card stat">
+            <div>
+              <span class="bd info">Manual Review</span>
+              <div class="sub" style="margin-top:8px">Verify details</div>
+            </div>
+            <strong style="color:var(--primary)">01</strong>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="ch">
+            <h2 class="primary-heading">Compliance Findings</h2>
+            <div class="tabs" id="ft" role="tablist"></div>
+          </div>
+          <div class="fr h">
+            <span class="primary-input-label">Status</span>
+            <span class="primary-input-label">Finding &amp; Details</span>
+            <span class="primary-input-label">Source Reference</span>
+          </div>
+          <div id="fl"></div>
+        </div>
+
+        <div class="card">
+          <div class="ch">
+            <div>
+              <h2 class="primary-heading">Missing or Incomplete Items</h2>
+              <p class="sub">Resolve these items in the document, then run the compliance review again.</p>
+            </div>
+          </div>
+          <div class="mi">
+            <span class="wi" id="w1"></span>
+            <div class="tx">
+              <span class="nm">Adult signature missing on Page 4</span>
+              <span class="mt">Required by Workspace Policy 5.3</span>
+            </div>
+            <button type="button" class="lk" data-a="noop">Open Document</button>
+          </div>
+          <div class="mi">
+            <span class="wi" id="w2"></span>
+            <div class="tx">
+              <span class="nm">Second income verification document missing</span>
+              <span class="mt">Required by Document Checklist Item 4</span>
+            </div>
+            <button type="button" class="lk" data-a="noop">Open Document</button>
+          </div>
+        </div>
+
+        <div class="srcs">
+          <span class="sub">Evaluated Sources:</span>
+          <span class="ref">Annual Recertification Policies § 5.3</span>
+          <span class="ref">Resident Eligibility SOP § 6.1</span>
+          <span class="ref">Annual Review Checklist</span>
+        </div>
+      </div>
+
+      <aside class="card chat">
+        <div class="ch">
+          <div>
+            <h2 class="primary-heading">Ask About These Findings</h2>
+            <p class="sub">Answers are grounded strictly in the evaluated sources above.</p>
+          </div>
+        </div>
+        <div class="msgs" id="msgs">
+          <div class="m">Ask me why an item was flagged or what a specific policy or checklist requires.</div>
+        </div>
+        <div class="cmp">
+          <div class="row" id="cq"></div>
+          <div class="cmp-input-row">
+            <input id="qi" class="primary-textbox" style="min-height: 44px !important; font-size: 14px !important;" placeholder="Type a question about these findings..." aria-label="Ask about these review findings" />
+            <button type="button" class="rb g" aria-label="Voice input" id="i4"></button>
+            <button type="button" class="rb" aria-label="Send question" data-a="send" id="i5"></button>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- ======================================================================
+         STATE 4: UNABLE TO REVIEW (ERROR RECOVERY)
+         ====================================================================== -->
+    <section id="error-v" hidden></section>
+
+    <!-- STICKY BOTTOM ACTION BAR -->
+    <div class="bar" id="bar"></div>
+  </main>
+
+  <!-- DISCREET PROTOTYPE STATE SWITCHER (BOTTOM-LEFT) -->
+  <aside class="state-switcher" id="stateSwitcher" aria-label="Prototype state switcher">
+    <span class="state-switcher__label">State</span>
+    <button type="button" class="state-switcher__btn on" data-v="setup">1. Setup</button>
+    <button type="button" class="state-switcher__btn" data-v="run">2. Reviewing</button>
+    <button type="button" class="state-switcher__btn" data-v="result">3. Results</button>
+    <button type="button" class="state-switcher__btn" data-v="error">4. Error</button>
+  </aside>
+
+  <script>
+    const P = {
+      folder: '<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+      file: '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>',
+      check: '<path d="M5 12l5 5L20 7"/>',
+      okc: '<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',
+      search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
+      back: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
+      alert: '<path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/>',
+      info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+      x: '<circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/>',
+      send: '<path d="M7 17L17 7M8 7h9v9"/>',
+      mic: '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
+      bell: '<path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7M10 20a2 2 0 0 0 4 0"/>',
+      dot: '<circle cx="12" cy="12" r="3"/>',
+      chev: '<path d="M6 9l6 6 6-6"/>'
+    };
+
+    const $ = s => document.querySelector(s);
+    const ic = (n, z = 18) => `<svg width="${z}" height="${z}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]}</svg>`;
+
+    const base = {
+      pol: ['Annual Recertification Policies', 'Resident Eligibility Policy', 'Fair Housing Policy', 'Records Retention Policy'],
+      sop: ['Resident Eligibility SOP', 'Income Verification SOP', 'Unit Inspection SOP'],
+      frm: ['HUD-9887 Consent Form', 'Annual Recertification Form', 'Household Composition Form']
+    };
+
+    const W = [
+      { id: 'h', n: 'Housing Operations', ...base, sf: ['John Smith', 'Maria Garcia', 'Priya Patel', 'Daniel Okafor', 'Lena Fischer'] },
+      { id: 'r', n: 'Resident Services', pol: ['Service Request Policy', 'Privacy Policy'], sop: ['Intake SOP', 'Referral SOP'], frm: ['Intake Form', 'Release of Information'], sf: ['Ahmed Khan', 'Grace Lee', 'Tomás Rivera'] },
+      { id: 'f', n: 'Finance & Billing', ...base, sf: ['Q3 Rent Roll', 'Vendor Invoices'] },
+      { id: 'm', n: 'Maintenance', ...base, sf: ['Building A', 'Building B'] },
+      { id: 'c', n: 'Compliance Audits', ...base, sf: ['2025 Audit', '2026 Audit'] },
+      { id: 'p', n: 'HR Onboarding', ...base, sf: ['New Hires 2026'] }
+    ];
+
+    const DOCS = [
+      { n: 'Annual Recertification – 2026', type: 'Template', s: 'Active', m: 'Jan 15, 2026', c: 'Annual Review Checklist' },
+      { n: 'Signed Lease Agreement.pdf', type: 'File upload', s: 'Active', m: 'Mar 2, 2025', c: null },
+      { n: 'Household Income Verification', type: 'Online form', s: 'Pending', m: 'Dec 9, 2025', c: 'Income Verification Checklist' },
+      { n: 'Move-in Inspection Report', type: 'Template', s: 'Archived', m: 'Aug 21, 2024', c: null }
+    ];
+
+    const SB = { Active: 'ok', Pending: 'warn', Archived: 'neu' };
+    const SC = ['Missing Required Documents', 'Missing Signatures', 'Incomplete Forms', 'Income Verification', 'Expired Documents'];
+
+    const F = [
+      ['ok', 'Resident application completed', 'Signed and dated within the last 12 months.', 'Policy 2.1'],
+      ['ok', 'Required consent forms present', 'All 3 consent forms found on pages 2 to 4.', 'SOP 3.2'],
+      ['warn', 'Income verification may be incomplete', 'Only one of two required income sources is documented.', 'Checklist 4'],
+      ['warn', 'Adult signature not found', 'Household member 2 has no signature on page 4.', 'Policy 5.3'],
+      ['info', 'Asset documentation should be reviewed', 'Asset totals changed since the last recertification.', 'SOP 6.1']
+    ];
+
+    const FL = { ok: 'Passed', warn: 'Needs attention', info: 'Review' };
+    const FI = { ok: 'okc', warn: 'alert', info: 'info' };
+
+    const CQ = [
+      'What is missing from this record?',
+      'Why was income verification flagged?',
+      'Which policy requires the adult signature?'
+    ];
+    const CA = {
+      [CQ[0]]: 'Two items need attention: the adult signature on page 4 (Policy 5.3) and a second income verification document (Checklist 4).',
+      [CQ[1]]: 'Checklist 4 requires two consecutive income sources. Only one paystub was found in the uploaded document.',
+      [CQ[2]]: 'Workspace Policy 5.3 requires every adult household member (18+) to sign the annual recertification form.'
+    };
+
+    const init = () => ({
+      v: 'setup',
+      multiWs: false,
+      wsList: ['h'],
+      ws: 'h',
+      sf: 0,
+      doc: 0,
+      pol: new Set(W[0].pol),
+      sop: new Set(W[0].sop),
+      frm: new Set(W[0].frm),
+      cl: true,
+      scope: new Set(SC.slice(0, 4)),
+      openDd: null,
+      f: 'all',
+      q: ['', '', '']
+    });
+
+    let S = init(), T;
+
+    const ws = () => W.find(w => w.id === S.ws);
+    const dc = () => (S.doc == null ? null : DOCS[S.doc]);
+    const hasCl = () => !!(dc() && dc().c && S.cl);
+    const src = () => S.pol.size + S.sop.size + S.frm.size + (hasCl() ? 1 : 0);
+    const path = () => `${ws().n} › Subfolder: ${ws().sf[S.sf]}`;
+
+    function clr(f) {
+      for (let j = f; j < 3; j++) {
+        S.q[j] = '';
+        const inp = document.querySelectorAll('.srch-input')[j];
+        if (inp) inp.value = '';
+      }
+    }
+
+    /* =========================================================================
+       STEP 1: 3-COLUMN CASCADING BROWSER (Workspace -> Subfolder -> Document)
+       ========================================================================= */
+    const item = (a, i, icn, nm, mt, on, extra = '') => `
+      <button type="button" class="it" data-a="${a}" data-i="${i}" aria-pressed="${on}">
+        <span class="ic">${ic(icn)}</span>
+        <span class="tx">
+          <span class="nm">${nm}</span>
+          <span class="mt">${mt}</span>
+        </span>
+        ${extra}
+        ${on ? `<span class="ck">${ic('check', 14)}</span>` : ''}
+      </button>`;
+
+    const hit = (s, q) => s.toLowerCase().includes(q.toLowerCase());
+
+    function rCols() {
+      const wList = W.filter(w => hit(w.n, S.q[0]));
+      $('#wsCount').textContent = `${wList.length} available`;
+      $('#l0').innerHTML = wList.map(w => {
+        const isOn = S.multiWs ? S.wsList.includes(w.id) : S.ws === w.id;
+        return item('w', w.id, 'folder', w.n, `${w.sf.length} subfolders · ${w.pol.length} policies`, isOn);
+      }).join('') || '<div class="empty"><span class="empty-title">No workspaces match</span><span>Try a different search term.</span></div>';
+
+      if (!S.ws) {
+        $('#sfCount').textContent = '';
+        $('#l1').innerHTML = '<div class="empty"><span class="empty-title">Step 2: Choose a Subfolder</span><span>Select a Workspace in column 1 first.</span></div>';
+      } else {
+        const sfList = ws().sf.map((n, i) => [n, i]).filter(x => hit(x[0], S.q[1]));
+        $('#sfCount').textContent = `${sfList.length} subfolders`;
+        $('#l1').innerHTML = sfList.map(([n, i]) =>
+          item('s', i, 'folder', n, `${DOCS.length} documents`, S.sf === i)
+        ).join('') || '<div class="empty"><span class="empty-title">No subfolders match</span></div>';
+      }
+
+      if (S.sf == null) {
+        $('#docCount').textContent = '';
+        $('#l2').innerHTML = '<div class="empty"><span class="empty-title">Step 3: Choose a Document</span><span>Select a Subfolder in column 2 to view its documents.</span></div>';
+      } else {
+        const dList = DOCS.map((d, i) => [d, i]).filter(x => hit(x[0].n, S.q[2]));
+        $('#docCount').textContent = `${dList.length} documents`;
+        $('#l2').innerHTML = dList.map(([d, i]) =>
+          item('d', i, 'file', d.n, `${d.type} · ${d.s} · ${d.m}`, S.doc === i, d.c ? '<span class="bd pur">1 Checklist</span>' : '')
+        ).join('') || '<div class="empty"><span class="empty-title">No documents match</span></div>';
+      }
+    }
+
+    /* =========================================================================
+       STEP 2: RIGHT-HAND REVIEW SETUP PANEL (Dropdowns + Checkbox Checklist)
+       ========================================================================= */
+    function renderDropdown(key, label, sourceNote, allItems) {
+      const selectedSet = S[key];
+      const total = allItems.length;
+      const count = selectedSet.size;
+      const isOpen = S.openDd === key;
+
+      let summaryText = 'None selected (Click to choose)';
+      if (count === total) {
+        summaryText = `All ${label} (${total} included)`;
+      } else if (count === 1) {
+        summaryText = Array.from(selectedSet)[0];
+      } else if (count > 1) {
+        summaryText = `${Array.from(selectedSet)[0]} + ${count - 1} more`;
+      }
+
+      const countBadgeClass = count === 0 ? 'dropdown-trigger__count is-zero' : 'dropdown-trigger__count';
+
+      return `
+        <div class="field-block">
+          <div class="field-header">
+            <span class="primary-input-label">${label}</span>
+            <span class="sub" style="font-size:12px">${sourceNote}</span>
+          </div>
+          <button type="button" class="dropdown-trigger" data-a="dd-toggle" data-k="${key}" aria-expanded="${isOpen}">
+            <div class="dropdown-trigger__text">
+              <span class="dropdown-trigger__main">${summaryText}</span>
+            </div>
+            <span class="${countBadgeClass}">${count} of ${total}</span>
+            <span class="dropdown-chevron">${ic('chev', 18)}</span>
+          </button>
+          ${isOpen ? `
+            <div class="dropdown-menu" role="listbox" aria-label="${label}">
+              <div class="dropdown-menu__top">
+                <span>Select ${label}</span>
+                <div>
+                  <button type="button" class="lk" data-a="dd-all" data-k="${key}">Select All</button>
+                  <button type="button" class="lk" data-a="dd-none" data-k="${key}">Clear</button>
+                </div>
+              </div>
+              <div class="dropdown-menu__list">
+                ${allItems.map((itemName, idx) => `
+                  <label class="dropdown-option">
+                    <input type="checkbox" data-a="dd-check" data-k="${key}" data-i="${idx}" ${selectedSet.has(itemName) ? 'checked' : ''} />
+                    <span>${itemName}</span>
+                  </label>
+                `).join('')}
+              </div>
+              <div class="dropdown-menu__footer">
+                <button type="button" class="lk" data-a="dd-close">Done</button>
+              </div>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    function rPanel() {
+      const d = dc(), p = $('#panel');
+      if (!d) {
+        p.innerHTML = `
+          <div class="ch"><h2 class="primary-heading">Review Setup</h2></div>
+          <div class="empty">
+            <span class="empty-title">No Document Selected Yet</span>
+            <span>Select a Workspace, Subfolder, and Document on the left to configure your Policies, SOPs, Forms, and Checklist.</span>
+          </div>`;
+        return;
+      }
+
+      const w = ws();
+      const wsSourceLabel = S.multiWs && S.wsList.length > 1
+        ? `From ${S.wsList.length} selected workspaces`
+        : `Attached to ${w.n}`;
+
+      p.innerHTML = `
+        <div class="ch">
+          <div>
+            <h2 class="primary-heading">Review Setup</h2>
+            <p class="sub">Customize the criteria for this compliance run.</p>
+          </div>
+        </div>
+        <div class="sp-b">
+          <!-- Target Document Summary Banner -->
+          <div class="doc-summary">
+            <span class="nm">${d.n}</span>
+            <span class="sub">${path()}</span>
+            <div class="row" style="margin-top:4px">
+              <span class="bd ${SB[d.s]}">${d.s}</span>
+              <span class="bd info">${d.type}</span>
+              <span class="sub">Modified ${d.m}</span>
+            </div>
+          </div>
+
+          <!-- Workspace-Bound Dropdowns: Policies, SOPs, Forms -->
+          ${renderDropdown('pol', 'Policies', wsSourceLabel, w.pol)}
+          ${renderDropdown('sop', 'SOPs', wsSourceLabel, w.sop)}
+          ${renderDropdown('frm', 'Forms', wsSourceLabel, w.frm)}
+
+          <!-- Document-Bound Checklist -->
+          <div class="checklist-card ${d.c ? 'has-cl' : ''}">
+            <div class="field-header">
+              <span class="primary-input-label">Document Checklist</span>
+              <span class="bd ${d.c ? 'pur' : 'neu'}">${d.c ? '1 Attached to Document' : 'None Attached'}</span>
+            </div>
+            ${d.c ? `
+              <label class="checklist-checkbox-row">
+                <input type="checkbox" data-a="cl" ${S.cl ? 'checked' : ''} />
+                <span>
+                  Use <strong>${d.c}</strong>
+                  <span class="sub" style="display:block;font-weight:400;margin-top:2px">Evaluates mandatory document-level items alongside workspace policies.</span>
+                </span>
+              </label>
+            ` : `
+              <p class="sub" style="margin:0">No checklist is attached to this document. The compliance check will evaluate your selected Workspace Policies, SOPs, and Forms.</p>
+            `}
+          </div>
+
+          <!-- Hardcoded Review Scope Dropdown + Active Summary Chips -->
+          <div>
+            ${renderDropdown('scope', 'Review Scope', 'Hardcoded preset checks', SC)}
+            <div class="scope-chips" aria-label="Selected review scope items">
+              ${Array.from(S.scope).map(s => `<span class="scope-chip">${ic('check', 12)}${s}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    const rS = () => { rCols(); rPanel(); };
+
+    /* =========================================================================
+       STICKY BOTTOM ACTION BAR (NEW-GLOBAL-V2 BUTTONS & MONOSPACE STATS)
+       ========================================================================= */
+    function rBar() {
+      const d = dc(), b = $('#bar');
+      let h;
+      if (S.v === 'setup') {
+        const ok = d && src() > 0 && S.scope.size > 0;
+        h = `
+          <div class="bar-left">
+            <div class="bar-counter">
+              <strong>${String(src()).padStart(2, '0')}</strong>
+              <span>Sources Active</span>
+            </div>
+            <div class="bar-counter">
+              <strong>${String(S.scope.size).padStart(2, '0')}</strong>
+              <span>Scope Checks</span>
+            </div>
+            <div class="sm">
+              ${!d
+                ? 'Choose a <b>Workspace</b>, <b>Subfolder</b>, and <b>Document</b> above to begin.'
+                : !ok
+                  ? 'Please select at least <b>1 reference source</b> and <b>1 review scope item</b> in the right panel.'
+                  : `Ready to review <b>${d.n}</b> (${S.pol.size} policies, ${S.sop.size} SOPs, ${S.frm.size} forms, ${hasCl() ? '1 checklist' : 'no checklist'})`
+              }
+            </div>
+          </div>
+          <div class="acts">
+            <button type="button" class="secondary-button" data-a="reset">Reset</button>
+            <button type="button" class="primary-button" data-a="start" ${ok ? '' : 'disabled'}>Start Compliance Review →</button>
+          </div>`;
+      } else if (S.v === 'run') {
+        h = `
+          <div class="sm"><b>Review in progress...</b> This usually takes under a minute.</div>
+          <div class="acts"><button type="button" class="secondary-button" data-a="setup">Cancel Review</button></div>`;
+      } else if (S.v === 'result') {
+        h = `
+          <div class="sm"><b>Review complete</b> · 5 findings total, 2 items need attention</div>
+          <div class="acts">
+            <button type="button" class="secondary-button" data-a="setup">Edit Review Criteria</button>
+            <button type="button" class="secondary-button" data-a="noop">Export CSV / PDF</button>
+            <button type="button" class="primary-button" data-a="another">Review Another Document</button>
+          </div>`;
+      } else {
+        h = `
+          <div class="sm"><b>Review paused.</b> Your workspace and criteria selections are saved.</div>
+          <div class="acts">
+            <button type="button" class="secondary-button" data-a="another">Choose Another Document</button>
+            <button type="button" class="primary-button" data-a="setup">Update Review Criteria</button>
+          </div>`;
+      }
+      b.innerHTML = h;
+    }
+
+    /* =========================================================================
+       STATE 2, 3, 4 RENDERERS
+       ========================================================================= */
+    function rRun() {
+      const st = [
+        'Reading target document text',
+        `Checking ${S.pol.size} workspace policies`,
+        `Checking ${S.sop.size} workspace SOPs & ${S.frm.size} forms`,
+        hasCl() ? `Applying ${dc().c}` : 'Skipping document checklist (none selected)',
+        `Evaluating ${S.scope.size} review scope criteria`,
+        'Generating compliance findings report'
+      ];
+      let n = 0;
+      const draw = () => {
+        $('#run-v').innerHTML = `
+          <div class="card run">
+            <div class="sp" role="status" aria-label="Review in progress"></div>
+            <h2 class="primary-heading" style="font-size:22px">Reviewing ${dc().n}</h2>
+            <p class="sub">${path()}</p>
+            <div class="track"><i style="width:${(n / st.length) * 100}%"></i></div>
+            <ol class="steps">
+              ${st.map((x, i) => `<li class="${i < n ? 'done' : i === n ? 'act' : ''}">${ic(i < n ? 'check' : 'dot', 16)} ${x}</li>`).join('')}
+            </ol>
+          </div>`;
+      };
+      draw();
+      T = setInterval(() => {
+        n++;
+        if (n >= st.length) {
+          clearInterval(T);
+          return go('result');
+        }
+        draw();
+      }, 600);
+    }
+
+    function rRes() {
+      const d = dc();
+      const fs = ['all', 'warn', 'ok', 'info'];
+      const cnt = k => (k === 'all' ? F.length : F.filter(x => x[0] === k).length);
+
+      $('#ctx').innerHTML = `
+        <div class="tx">
+          <span class="nm" style="font-size:16px">${d.n}</span>
+          <span class="sub">${path()}</span>
+        </div>
+        <div class="row">
+          <span class="bd ${SB[d.s]}">${d.s}</span>
+          <span class="bd info">${d.type}</span>
+          ${hasCl() ? `<span class="bd pur">${d.c}</span>` : '<span class="bd neu">No checklist used</span>'}
+        </div>`;
+
+      $('#ft').innerHTML = fs.map(k => `
+        <button type="button" role="tab" aria-selected="${S.f === k}" class="${S.f === k ? 'on' : ''}" data-a="f" data-i="${k}">
+          ${k === 'all' ? 'All' : FL[k]} (${cnt(k)})
+        </button>`).join('');
+
+      $('#fl').innerHTML = F.filter(x => S.f === 'all' || x[0] === S.f).map(x => `
+        <div class="fr">
+          <span class="bd ${x[0]}">${ic(FI[x[0]], 12)} ${FL[x[0]]}</span>
+          <div class="tx">
+            <span class="nm">${x[1]}</span>
+            <span class="sub">${x[2]}</span>
+          </div>
+          <span class="ref">${x[3]}</span>
+        </div>`).join('');
+    }
+
+    function rErr() {
+      const d = dc();
+      const R = [
+        ['The document has no readable text', 'It looks like an image-only scan without OCR. Upload a text-searchable PDF and try again.', 'Open Document', 'noop'],
+        ...(d.c ? [[`${d.c} couldn’t be loaded`, 'The attached checklist is temporarily unavailable. You can still run the review using only Workspace Policies and SOPs.', 'Continue Without Checklist', 'nocl']] : []),
+        ['Income Verification SOP is archived', 'One of the selected SOPs was archived in this workspace. Update your SOP dropdown selection.', 'Update Setup', 'setup']
+      ];
+      $('#error-v').innerHTML = `
+        <div class="card">
+          <div class="ehd">
+            <span class="eic">${ic('x', 24)}</span>
+            <div>
+              <h2 class="primary-heading">The compliance review couldn’t finish</h2>
+              <p class="sub">${d.n} · ${path()}</p>
+            </div>
+          </div>
+          ${R.map(r => `
+            <div class="mi">
+              <span class="wi">${ic('alert', 20)}</span>
+              <div class="tx">
+                <span class="nm">${r[0]}</span>
+                <span class="mt">${r[1]}</span>
+              </div>
+              <button type="button" class="secondary-button secondary-button--small" data-a="${r[3]}">${r[2]}</button>
+            </div>`).join('')}
+        </div>`;
+    }
+
+    const H = {
+      setup: ['Compliance Assistant', 'Select a Workspace, Subfolder, and Document on the left, then use the dropdowns on the right to review against Policies, SOPs, Forms, and the Document Checklist.'],
+      run: ['Reviewing Document', 'Hang tight. We are comparing your selected document against the chosen workspace sources and checklist.'],
+      result: ['Review Results', 'Your compliance check is complete. Below are the findings, missing items that require attention, and source references.'],
+      error: ['Unable to Review', 'We couldn’t complete the compliance review with the current setup. Resolve the items below to retry.']
+    };
+
+    function go(v) {
+      clearInterval(T);
+      if (v !== 'setup' && S.doc == null) {
+        S.ws = 'h';
+        S.sf = 0;
+        S.doc = 0;
+      }
+      S.v = v;
+      S.openDd = null;
+      ['setup', 'run', 'result', 'error'].forEach(x => {
+        $('#' + x + '-v').hidden = x !== v;
+      });
+      document.querySelectorAll('.state-switcher__btn').forEach(b => b.classList.toggle('on', b.dataset.v === v));
+      $('#t').textContent = H[v][0];
+      $('#d').textContent = H[v][1];
+      ({ setup: rS, run: rRun, result: rRes, error: rErr })[v]();
+      rBar();
+      scrollTo(0, 0);
+    }
+
+    function ask(t) {
+      t = t.trim();
+      if (!t) return;
+      const m = $('#msgs');
+      m.insertAdjacentHTML('beforeend', `<div class="m u">${t.replace(/[<&]/g, c => (c === '<' ? '&lt;' : '&amp;'))}</div>`);
+      m.scrollTop = m.scrollHeight;
+      setTimeout(() => {
+        m.insertAdjacentHTML('beforeend', `<div class="m">${CA[t] || 'Based on the selected policies and checklist, please verify the two items marked Needs Attention first.'}</div>`);
+        m.scrollTop = m.scrollHeight;
+      }, 450);
+    }
+
+    /* =========================================================================
+       EVENT DELEGATION (Dropdowns, Checkboxes, Navigation)
+       ========================================================================= */
+    document.addEventListener('click', e => {
+      // Close profile menu if click outside
+      const profileBtn = $('#profileBtn');
+      const profileMenu = $('#profileMenu');
+      if (profileBtn && profileMenu) {
+        if (profileBtn.contains(e.target)) {
+          profileMenu.classList.toggle('show');
+        } else if (!profileMenu.contains(e.target)) {
+          profileMenu.classList.remove('show');
+        }
+      }
+
+      // Close open dropdown if clicking outside field-block
+      if (S.openDd && !e.target.closest('.field-block')) {
+        S.openDd = null;
+        rPanel();
+      }
+
+      const t = e.target.closest('[data-a],[data-v],[data-q]');
+      if (!t || t.tagName === 'INPUT') return;
+      const { a, i, k, v, q } = t.dataset;
+
+      if (v) return go(v);
+      if (q != null) return ask(CQ[q]);
+
+      if (a === 'toggle-multi') {
+        S.multiWs = !S.multiWs;
+        if (!S.multiWs) S.wsList = [S.ws || 'h'];
+        $('#wsBadge').textContent = S.multiWs ? `${S.wsList.length} Workspaces Selected` : '1 Workspace Mode';
+        return rS(), rBar();
+      }
+
+      if (a === 'w') {
+        if (S.multiWs) {
+          if (S.wsList.includes(i)) {
+            if (S.wsList.length > 1) S.wsList = S.wsList.filter(x => x !== i);
+          } else {
+            S.wsList.push(i);
+          }
+          S.ws = i;
+          $('#wsBadge').textContent = `${S.wsList.length} Workspaces Selected`;
+        } else {
+          S.ws = i;
+          S.wsList = [i];
+        }
+        ['pol', 'sop', 'frm'].forEach(x => (S[x] = new Set(ws()[x])));
+        S.sf = 0;
+        S.doc = 0;
+        S.openDd = null;
+        clr(1);
+        return rS(), rBar();
+      }
+
+      if (a === 's') {
+        S.sf = +i;
+        S.doc = 0;
+        S.openDd = null;
+        clr(2);
+        return rS(), rBar();
+      }
+
+      if (a === 'd') {
+        S.doc = +i;
+        S.cl = true;
+        S.openDd = null;
+        return rS(), rBar();
+      }
+
+      if (a === 'dd-toggle') {
+        S.openDd = S.openDd === k ? null : k;
+        return rPanel();
+      }
+
+      if (a === 'dd-close') {
+        S.openDd = null;
+        return rPanel();
+      }
+
+      if (a === 'dd-all') {
+        const list = k === 'scope' ? SC : ws()[k];
+        S[k] = new Set(list);
+        return rPanel(), rBar();
+      }
+
+      if (a === 'dd-none') {
+        S[k] = new Set();
+        return rPanel(), rBar();
+      }
+
+      if (a === 'f') {
+        S.f = i;
+        return rRes();
+      }
+
+      if (a === 'reset') {
+        S = init();
+        clr(0);
+        return go('setup');
+      }
+
+      if (a === 'start') return go('run');
+      if (a === 'setup') return go('setup');
+      if (a === 'another') {
+        S.doc = null;
+        return go('setup');
+      }
+      if (a === 'nocl') {
+        S.cl = false;
+        return go('run');
+      }
+      if (a === 'send') {
+        ask($('#qi').value);
+        $('#qi').value = '';
+      }
+    });
+
+    document.addEventListener('change', e => {
+      const t = e.target;
+      const { a, k, i } = t.dataset;
+      if (a === 'dd-check') {
+        const list = k === 'scope' ? SC : ws()[k];
+        const val = list[i];
+        t.checked ? S[k].add(val) : S[k].delete(val);
+      } else if (a === 'cl') {
+        S.cl = t.checked;
+      } else {
+        return;
+      }
+      rPanel();
+      rBar();
+    });
+
+    $('#qi').addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        ask(e.target.value);
+        e.target.value = '';
+      }
+    });
+
+    $('#cq').innerHTML = CQ.map((x, i) => `<button type="button" class="q-chip" data-q="${i}">${x}</button>`).join('');
+
+    [
+      ['#i3', 'back', 20],
+      ['#i4', 'mic', 20],
+      ['#i5', 'send', 20],
+      ['#s0', 'search', 16],
+      ['#s1', 'search', 16],
+      ['#s2', 'search', 16],
+      ['#w1', 'alert', 20],
+      ['#w2', 'alert', 20]
+    ].forEach(([s, n, z]) => {
+      const el = $(s);
+      if (el) el.innerHTML = ic(n, z);
+    });
+
+    go('setup');
+  </script>
+</body>
+</html>
